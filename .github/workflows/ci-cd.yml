@@ -3,9 +3,9 @@ name: CI/CD
 on:
   # Executa em todos os pushes e PRs para garantir que os testes sempre rodem
   push:
-    branches: [ "main" ]
+    branches: [ "pluga-desaafio-paulo" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "pluga-desaafio-paulo" ]
 
 jobs:
   # --- Fase de Testes ---
@@ -30,7 +30,7 @@ jobs:
   # --- Fase de Deploy (executa somente na branch main e após os testes) ---
   deploy:
     needs: test
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/pluga-desaafio-paulo'
     runs-on: ubuntu-latest
     environment: production
     steps:
