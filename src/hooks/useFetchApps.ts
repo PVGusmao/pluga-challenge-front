@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import api from "@/services/api";
 import { App } from "@/contexts/main-context";
 
@@ -7,9 +7,10 @@ import { App } from "@/contexts/main-context";
  * popular os estados de apps e lastSelectedApps.
  */
 export function useFetchApps(
-  setApps: React.Dispatch<React.SetStateAction<App[]>>,
-  setLastSelectedApps: React.Dispatch<React.SetStateAction<App[]>>
-) {
+  setLastSelectedApps?: React.Dispatch<React.SetStateAction<App[]>>
+): App[] {
+  const [apps, setApps] = useState<App[]>([]);
+
   useEffect(() => {
     async function fetchApps() {
       try {
@@ -17,23 +18,29 @@ export function useFetchApps(
         const allApps: App[] = response.data;
         setApps(allApps);
 
-        const appsByAppId = allApps.reduce<Record<string, App>>((acc, app) => {
-          acc[app.app_id] = app;
-          return acc;
-        }, {});
+        if (setLastSelectedApps) {
+          const appsByAppId = allApps.reduce<Record<string, App>>((acc, app) => {
+            acc[app.app_id] = app;
+            return acc;
+          }, {});
 
-        const storedLastSelectedAppIds: string[] = JSON.parse(
-          localStorage.getItem("lastSelectedApps") || "[]"
-        );
+          const storedLastSelectedAppIds: string[] = JSON.parse(
+            localStorage.getItem("lastSelectedApps") || "[]"
+          );
 
-        setLastSelectedApps(
-          storedLastSelectedAppIds.map((appId) => appsByAppId[appId]).filter(Boolean)
-        );
+          setLastSelectedApps(
+            storedLastSelectedAppIds
+              .map((appId) => appsByAppId[appId])
+              .filter(Boolean)
+          );
+        }
       } catch (error) {
         console.error(error);
       }
     }
 
     fetchApps();
-  }, [setApps, setLastSelectedApps]);
+  }, [setLastSelectedApps]);
+
+  return apps;
 } 

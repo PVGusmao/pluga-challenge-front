@@ -13,7 +13,6 @@ export interface App {
 
 interface MainContextProps {
   apps: App[];
-  setApps: React.Dispatch<React.SetStateAction<App[]>>;
   lastSelectedApps: App[];
   setLastSelectedApps: React.Dispatch<React.SetStateAction<App[]>>;
   modalRef: React.RefObject<HTMLDialogElement | null>;
@@ -30,9 +29,9 @@ interface MainContextProps {
 const MainContext = createContext<MainContextProps | undefined>(undefined);
 
 export const MainProvider = ({ children }: { children: ReactNode }) => {
-  const [apps, setApps] = useState<App[]>([])
-
   const [lastSelectedApps, setLastSelectedApps] = useState<App[]>([])
+
+  const apps = useFetchApps(setLastSelectedApps);
 
   const modalRef = useRef<HTMLDialogElement | null>(null)
 
@@ -42,9 +41,6 @@ export const MainProvider = ({ children }: { children: ReactNode }) => {
 
   const [selectedApp, setSelectedApp] = useState<App | null>(null)
 
-  // Responsável por buscar apps e popular estados correspondentes
-  useFetchApps(setApps, setLastSelectedApps);
-
   const filteredApps = apps.filter((app) => app.name.toLowerCase().includes(search))
 
   const pagedFilteredApps = filteredApps.slice((page - 1) * 12, page * 12)
@@ -52,7 +48,7 @@ export const MainProvider = ({ children }: { children: ReactNode }) => {
   return (
     <MainContext.Provider
       value={{
-        apps, setApps,
+        apps,
         lastSelectedApps, setLastSelectedApps,
         modalRef,
         page, setPage,
