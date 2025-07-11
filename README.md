@@ -125,4 +125,4 @@ Relatório completo exibido no terminal.
 
 ## O link público de acesso ao site no ar é:
 
-- **https://pluga-challenge-front.vercel.app/
+- https://pluga-challenge-front.vercel.app/
