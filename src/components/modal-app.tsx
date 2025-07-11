@@ -1,14 +1,15 @@
 import { App, useMainContext } from "@/contexts/main-context";
+import { useSelectApp } from "@/hooks/useSelectApp";
 import Image from "next/image";
 
 type Props = {
-  handleSelectedApp: (app: App) => void;
   modalRef: React.RefObject<HTMLDialogElement>;
   lastSelectedApps: App[];
 }
 
-export default function ModalApp({ handleSelectedApp, modalRef, lastSelectedApps }: Props) {
+export default function ModalApp({ modalRef, lastSelectedApps }: Props) {
   const { selectedApp } = useMainContext()
+  const selectApp = useSelectApp()
 
   return (
     <dialog className="modal" ref={modalRef}>
@@ -36,7 +37,7 @@ export default function ModalApp({ handleSelectedApp, modalRef, lastSelectedApps
             {[...lastSelectedApps].reverse().map((app) => (
               <button
                 key={app.app_id}
-                onClick={() => handleSelectedApp(app)}
+                onClick={() => selectApp(app)}
                 className="card card-sm group bg-base-100 cursor-pointer transition shadow-sm hover:shadow-lg"
               >
                 <figure style={{ backgroundColor: app.color }} className="p-6">

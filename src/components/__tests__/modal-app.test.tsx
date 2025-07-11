@@ -23,7 +23,7 @@ const lastApps: App[] = [
   },
 ];
 
-const mockHandleSelectedApp = jest.fn();
+const mockSelectApp = jest.fn();
 const mockModalRef = { current: null } as unknown as React.RefObject<HTMLDialogElement>;
 
 jest.mock('@/contexts/main-context', () => {
@@ -34,6 +34,10 @@ jest.mock('@/contexts/main-context', () => {
   };
 });
 
+jest.mock('@/hooks/useSelectApp', () => ({
+  useSelectApp: () => mockSelectApp,
+}));
+
 describe('ModalApp', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -42,7 +46,6 @@ describe('ModalApp', () => {
   it('exibe informações do app selecionado', () => {
     render(
       <ModalApp
-        handleSelectedApp={mockHandleSelectedApp}
         modalRef={mockModalRef}
         lastSelectedApps={lastApps}
       />
@@ -54,7 +57,6 @@ describe('ModalApp', () => {
   it('lista as últimas ferramentas visualizadas', () => {
     render(
       <ModalApp
-        handleSelectedApp={mockHandleSelectedApp}
         modalRef={mockModalRef}
         lastSelectedApps={lastApps}
       />
@@ -65,10 +67,9 @@ describe('ModalApp', () => {
     });
   });
 
-  it('ao clicar em uma ferramenta recente, chama handleSelectedApp', () => {
+  it('ao clicar em uma ferramenta recente, chama selectApp (hook)', () => {
     render(
       <ModalApp
-        handleSelectedApp={mockHandleSelectedApp}
         modalRef={mockModalRef}
         lastSelectedApps={lastApps}
       />
@@ -76,6 +77,6 @@ describe('ModalApp', () => {
 
     fireEvent.click(screen.getByText(lastApps[1].name));
 
-    expect(mockHandleSelectedApp).toHaveBeenCalledWith(lastApps[1]);
+    expect(mockSelectApp).toHaveBeenCalledWith(lastApps[1]);
   });
 }); 

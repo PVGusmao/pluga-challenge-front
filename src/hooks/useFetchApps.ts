@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import api from "@/services/api";
 import { App } from "@/contexts/main-context";
 
-/**
- * Hook responsável por buscar as ferramentas da API da Pluga e
- * popular os estados de apps e lastSelectedApps.
- */
 export function useFetchApps(
   setLastSelectedApps?: React.Dispatch<React.SetStateAction<App[]>>
 ): App[] {
