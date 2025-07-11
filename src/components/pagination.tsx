@@ -12,7 +12,6 @@ export default function Pagination() {
   return (
     <div className={`text-center`}>
       <div className="join">
-        {/* Página anterior */}
         <button
           onClick={() => setPage(Math.max(page - 1, 1))}
           className={`join-item btn ${page === 1 ? "btn-disabled" : ""}`}
@@ -20,7 +19,6 @@ export default function Pagination() {
           <FiChevronLeft className="size-4" />
         </button>
 
-        {/* Botões numéricos */}
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((actual) => (
           <button
             key={`page-${actual}`}
@@ -31,7 +29,6 @@ export default function Pagination() {
           </button>
         ))}
 
-        {/* Próxima página */}
         <button
           onClick={() => setPage(Math.min(page + 1, totalPages))}
           className={`join-item btn ${page === totalPages ? "btn-disabled" : ""}`}

@@ -1,12 +1,30 @@
-import { App } from "@/contexts/main-context";
+import { App, useMainContext } from "@/contexts/main-context";
 import Image from "next/image";
+import ModalApp from "./modal-app";
 
 type Props = {
   app: App;
-  handleSelectedApp: (app: App) => void;
 }
 
-export default function CardApp({ app, handleSelectedApp}: Props) {
+export default function CardApp({ app}: Props) {
+  const { setSelectedApp, setLastSelectedApps, modalRef, lastSelectedApps } = useMainContext();
+
+  function handleSelectedApp(app: App) {
+    setSelectedApp(app)
+
+    const lastSelectedAppsSet = new Set(lastSelectedApps)
+    lastSelectedAppsSet.delete(app)
+    lastSelectedAppsSet.add(app)
+
+    const newLastSelectedApps = Array.from(lastSelectedAppsSet).slice(-3)
+    setLastSelectedApps(newLastSelectedApps)
+
+    const newLastSelectedAppIds = newLastSelectedApps.map((app) => app.app_id)
+    localStorage.setItem("lastSelectedApps", JSON.stringify(newLastSelectedAppIds))
+
+    modalRef.current?.showModal()
+  }
+
   return (
     <div>
       <a key={app.app_id} onClick={() => handleSelectedApp(app)} className="card card-sm group bg-base-100 cursor-pointer transition shadow-sm hover:shadow-lg">
@@ -17,6 +35,12 @@ export default function CardApp({ app, handleSelectedApp}: Props) {
           <h4>{app.name}</h4>
         </div>
       </a>
+
+      <ModalApp
+        handleSelectedApp={handleSelectedApp}
+        modalRef={modalRef as React.RefObject<HTMLDialogElement>}
+        lastSelectedApps={lastSelectedApps}
+      />
     </div>
   )
 }

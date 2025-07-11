@@ -19,11 +19,17 @@ interface MainContextProps {
   modalRef: React.RefObject<HTMLDialogElement | null>;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  selectedApp: App | null;
+  setSelectedApp: React.Dispatch<React.SetStateAction<App | null>>;
+  filteredApps: App[];
+  pagedFilteredApps: App[];
 }
 
 const MainContext = createContext<MainContextProps | undefined>(undefined);
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+export const MainProvider = ({ children }: { children: ReactNode }) => {
   const [apps, setApps] = useState<App[]>([])
 
   const [lastSelectedApps, setLastSelectedApps] = useState<App[]>([])
@@ -31,6 +37,14 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const modalRef = useRef<HTMLDialogElement | null>(null)
 
   const [page, setPage] = useState(1)
+
+  const [search, setSearch] = useState("")
+
+  const [selectedApp, setSelectedApp] = useState<App | null>(null)
+
+  const filteredApps = apps.filter((app) => app.name.toLowerCase().includes(search))
+
+  const pagedFilteredApps = filteredApps.slice((page - 1) * 12, page * 12)
 
   function handlePlugaApps() {
     api
@@ -63,6 +77,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         lastSelectedApps, setLastSelectedApps,
         modalRef,
         page, setPage,
+        search, setSearch,
+        selectedApp, setSelectedApp,
+        filteredApps,
+        pagedFilteredApps,
       }}
     >
       <div>{children}</div>
