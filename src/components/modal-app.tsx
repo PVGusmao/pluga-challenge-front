@@ -33,7 +33,7 @@ export default function ModalApp({ handleSelectedApp, modalRef, lastSelectedApps
           </h2>
           
           <div className="grid grid-cols-3 gap-6 w-full">
-            {lastSelectedApps.toReversed().map((app) => (
+            {[...lastSelectedApps].reverse().map((app) => (
               <button
                 key={app.app_id}
                 onClick={() => handleSelectedApp(app)}
