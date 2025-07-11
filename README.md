@@ -122,3 +122,7 @@ Relatório completo exibido no terminal.
 - **Axios instance**: facilita a requisição e centraliza todas na `baseURL`.
 - **Tailwind CSS + DaisyUI**: fácil utilização e simplicidade de código.
 - **Test-Driven Development**: testes escritos para cada camada.
+
+## O link público de acesso ao site no ar é:
+
+- **https://pluga-challenge-front.vercel.app/
