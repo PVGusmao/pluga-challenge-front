@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pluga Challenge Front
 
-## Getting Started
+Nós da [Pluga](https://pluga.co) nos orgulhamos muito do nosso time e sempre queremos
+boas pessoas para acrescentar com a gente, por isso preparamos esse desafio de avaliação.
 
-First, run the development server:
+## Desafio
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A código nesse repositório é uma simples aplicação web baseada em
+[React](https://react.dev). Ela lista os apps integrados à Pluga, apresentando
+as funcionalidades de busca e paginação, além de um modal que guarda os últimos
+apps acessados. Apesar de funcional, o código está muito mal organizado,
+totalmente concentrado em um único módulo e sem boas práticas aplicadas.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sua tarefa é fazer um fork desse repositório e aplicar um bom design de código,
+seguindo os requisitos listados abaixo e claro, mantendo a aplicação funcional.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Requisitos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Migrar para o framework [Next.js](https://nextjs.org);
+- Migrar para a linguagem [Typescript](https://www.typescriptlang.org);
+- Centralizar o estado com [Context Hooks](https://react.dev/reference/react/hooks#context-hooks);
+- Escrever testes com [Jest](https://jestjs.io);
+- Configurar um CI/CD com [GitHub Actions](https://github.com/features/actions);
+- Escrever um README com uma boa descrição do projeto.
 
-## Learn More
+## Considerações
 
-To learn more about Next.js, take a look at the following resources:
+Sua entrega será avaliada principalmente pela organização do seu projeto,
+busque entregar um código de fácil manutenção, baixo acoplamento e alta coesão.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Caso aceite o desafio e submeta seu projeto, vamos avaliar seu código com muita
+atenção para retornar com a nossa visão de quais são os pontos positivos do seu
+teste e os pontos a melhorar.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Muito obrigado e bom coding. :)
