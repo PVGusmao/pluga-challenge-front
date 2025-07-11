@@ -1,35 +1,124 @@
 # Pluga Challenge Front
 
-Nós da [Pluga](https://pluga.co) nos orgulhamos muito do nosso time e sempre queremos
-boas pessoas para acrescentar com a gente, por isso preparamos esse desafio de avaliação.
+Bem-vindo ao **Pluga Challenge Front** – uma aplicação Next.js 15 construída para o desafio técnico da Pluga. O objetivo é listar integrações ("apps") provenientes de uma API pública, permitindo busca, paginação e visualização de detalhes em um modal.
 
-## Desafio
+---
 
-A código nesse repositório é uma simples aplicação web baseada em
-[React](https://react.dev). Ela lista os apps integrados à Pluga, apresentando
-as funcionalidades de busca e paginação, além de um modal que guarda os últimos
-apps acessados. Apesar de funcional, o código está muito mal organizado,
-totalmente concentrado em um único módulo e sem boas práticas aplicadas.
+## ✨ Principais funcionalidades
 
-Sua tarefa é fazer um fork desse repositório e aplicar um bom design de código,
-seguindo os requisitos listados abaixo e claro, mantendo a aplicação funcional.
+1. **Listagem de Apps** – exibe cartões com nome, cor e ícone.
+2. **Busca em tempo real** – filtra localmente enquanto o usuário digita.
+3. **Paginação** – 12 itens por página, com navegação.
+4. **Modal de detalhes** – mostra informações do app selecionado e histórico das últimas 3 visualizações.
+5. **UX/Design** – estilizado com Tailwind CSS + DaisyUI.
+6. **Testes unitários** – Jest + React Testing Library cobrindo componentes, contextos, serviços e páginas.
 
-## Requisitos
+---
 
-- Migrar para o framework [Next.js](https://nextjs.org);
-- Migrar para a linguagem [Typescript](https://www.typescriptlang.org);
-- Centralizar o estado com [Context Hooks](https://react.dev/reference/react/hooks#context-hooks);
-- Escrever testes com [Jest](https://jestjs.io);
-- Configurar um CI/CD com [GitHub Actions](https://github.com/features/actions);
-- Escrever um README com uma boa descrição do projeto.
+## 🗂️ Estrutura de pastas
 
-## Considerações
+```text
+src/
+├─ app/                # Rotas do Next (app router)
+│  └─ page.tsx         # Página inicial renderizando <ItemList />
+├─ components/         # Componentes reutilizáveis
+│  ├─ …                # CardApp, ModalApp, Pagination, Header, etc.
+│  └─ __tests__/       # Testes de cada componente
+├─ contexts/           # React Context API
+│  └─ main-context.tsx # Estado global (apps, busca, página, modal…)
+│     __tests__/       # Testes do contexto
+├─ services/           # Acesso externo (Axios)
+│  └─ api.ts           # Instância pré-configurada
+│     __tests__/       # Teste da configuração
+└─ utils/              # (reservado para utilitários futuros)
+```
 
-Sua entrega será avaliada principalmente pela organização do seu projeto,
-busque entregar um código de fácil manutenção, baixo acoplamento e alta coesão.
+---
 
-Caso aceite o desafio e submeta seu projeto, vamos avaliar seu código com muita
-atenção para retornar com a nossa visão de quais são os pontos positivos do seu
-teste e os pontos a melhorar.
+## 🛠️ Tecnologias & dependências principais
 
-Muito obrigado e bom coding. :)
+| Tecnologia                | Versão |
+|---------------------------|---------|
+| Next.js                   | 15.3.x |
+| React                     | 19.x   |
+| TypeScript                | 5.x    |
+| Tailwind CSS + DaisyUI    | 4.x / 5.x |
+| Axios                     | 1.x    |
+| Jest + ts-jest            | 29.x   |
+| React Testing Library     | 16.x   |
+| ES Lint (+ next config)   | 9.x    |
+
+Todas as versões encontram-se em `package.json`.
+
+---
+
+## ⚙️ Variáveis de ambiente
+
+Crie um arquivo `.env.local` na raiz com:
+
+```env
+# URL da API que retorna a lista de apps (JSON)
+NEXT_PUBLIC_PLUGA_API_URL=API_ACESSO_PLUGA
+```
+
+> O prefixo **NEXT_PUBLIC_** torna a variável acessível no browser.
+
+---
+
+## 🚀 Como rodar localmente
+
+```bash
+# 1. Instalar dependências
+npm install
+
+# 2. Configurar variáveis no .env.local (ver acima)
+
+# 3. Ambiente de desenvolvimento com HMR
+npm run dev
+```
+
+A aplicação ficará disponível em `http://localhost:3000`.
+
+---
+
+## 📦 Build de produção
+
+```bash
+# Gera a versão otimizada
+npm run build
+
+# Inicia o servidor Next em modo produção
+npm start
+```
+
+---
+
+## 🔬 Testes
+
+```bash
+# Executa todos os testes uma vez
+npm test
+
+# Modo watch interativo
+npm run test:watch
+
+# Cobertura de código (html em coverage/lcov-report/index.html)
+npm run test:coverage
+```
+
+Os testes cobrem:
+
+- Serviços (`src/services/`)
+- Contextos (`src/contexts/`)
+- Componentes (`src/components/`)
+- Página inicial (`src/app/`)
+
+Relatório completo exibido no terminal.
+
+
+## 💡 Decisões de arquitetura
+
+- **Context API**: suficiente para o escopo do app, evitando lib externa (Redux, Zustand…).
+- **Axios instance**: facilita a requisição e centraliza todas na `baseURL`.
+- **Tailwind CSS + DaisyUI**: fácil utilização e simplicidade de código.
+- **Test-Driven Development**: testes escritos para cada camada.
