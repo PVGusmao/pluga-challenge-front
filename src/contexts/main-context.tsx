@@ -1,7 +1,7 @@
 'use client';
 
-import api from '@/services/api';
-import { createContext, useContext, ReactNode, useState, useEffect, useRef } from 'react';
+import { createContext, useContext, ReactNode, useState, useRef } from 'react';
+import { useFetchApps } from '@/hooks/useFetchApps';
 
 export interface App {
   app_id: string;
@@ -42,33 +42,12 @@ export const MainProvider = ({ children }: { children: ReactNode }) => {
 
   const [selectedApp, setSelectedApp] = useState<App | null>(null)
 
+  // Responsável por buscar apps e popular estados correspondentes
+  useFetchApps(setApps, setLastSelectedApps);
+
   const filteredApps = apps.filter((app) => app.name.toLowerCase().includes(search))
 
   const pagedFilteredApps = filteredApps.slice((page - 1) * 12, page * 12)
-
-  function handlePlugaApps() {
-    api
-      .get("")
-      .then((response) => {
-        const allApps = response.data
-        setApps(allApps);
-
-        const appsByAppId = (allApps as App[]).reduce((acc: Record<string, App>, app: App) => {
-          acc[app.app_id] = app;
-          return acc;
-        }, {});
-
-        const storedLastSelectedAppIds: string[] = JSON.parse(localStorage.getItem("lastSelectedApps") || "[]");
-
-        setLastSelectedApps(storedLastSelectedAppIds.map((appId: string) => appsByAppId[appId]));
-      }).catch((error) => {
-        console.log(error)
-      })
-  }
-
-  useEffect(() => {
-    handlePlugaApps()
-  }, [])
 
   return (
     <MainContext.Provider

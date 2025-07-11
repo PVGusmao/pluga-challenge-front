@@ -1,5 +1,4 @@
 import { useMainContext } from "@/contexts/main-context";
-import React from "react"
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 export default function Pagination() {

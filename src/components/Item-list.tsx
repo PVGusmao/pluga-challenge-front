@@ -17,8 +17,8 @@ export default function ItemList() {
   return (
     <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto p-6">
       <div className="grid grid-cols-4 gap-6">
-          {pagedFilteredApps.map((app, index) =>
-            <CardApp key={index} app={app}/>
+          {pagedFilteredApps.map((app) =>
+            <CardApp key={app.app_id} app={app} />
           )}
         </div>
         <Pagination />
